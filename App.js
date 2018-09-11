@@ -7,7 +7,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Button, Platform, StyleSheet, Text, View} from 'react-native';
+import firebase from 'react-native-firebase';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,12 +19,19 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  uploadData() {
+      console.warn('test ' + Math.random());
+      const dataPath = "/initialData";
+      firebase.database().ref(dataPath).set({
+          data: 'hello world ' + Math.random()
+      })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text>Integration with firebase</Text>
+        <Button onPress={this.uploadData} title={'Click me'}/>
       </View>
     );
   }
