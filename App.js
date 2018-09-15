@@ -19,12 +19,15 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor() {
+      super();
+      this.ref = firebase.firestore().collection('initialdata');
+      console.warn(this.ref)
+      this.ref.add({data: 'hello'})
+  }
+
   uploadData() {
-      console.warn('test ' + Math.random());
-      const dataPath = "/initialData";
-      firebase.database().ref(dataPath).set({
-          data: 'hello world ' + Math.random()
-      })
+      this.ref.add({data: 'hello ' + Math.random()})
   }
 
   render() {
