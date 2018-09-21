@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Button, FlatList, Picker, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, FlatList, Picker, StyleSheet, Text, TextInput, View, Keyboard} from 'react-native';
 import firebase from 'react-native-firebase';
 import moment from 'moment';
 
@@ -51,6 +51,8 @@ export default class App extends Component<Props> {
     }
 
     uploadData() {
+        Keyboard.dismiss();
+
         const {meal, date, type, meat, carbs, fibre, nuts} = this.state;
         this.ref.add({meal, date, type, meat, carbs, fibre, nuts})
             .then(() => {
