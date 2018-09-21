@@ -26,11 +26,21 @@ const getMealType = () => {
         return 'Dinner';
     }
 };
+const getDefaultMeal = () => {
+    return {
+        type: getMealType(),
+        date: moment().format('YYYY-MM-DD'),
+        meal: ''
+    }
+};
 
 export default class App extends Component<Props> {
     constructor(props) {
         super(props);
-        this.state = {date: '', meal: '', type: '', meals: []};
+        this.state = {
+            ...getDefaultMeal(),
+            meals: []
+        };
         this.unsubscribe = null;
 
         this.ref = firebase.firestore().collection('meals');
@@ -40,14 +50,16 @@ export default class App extends Component<Props> {
         const {meal, date, type} = this.state;
         this.ref.add({meal, date, type})
             .then(() => {
-                this.setState({meal: '', date: '', type: getMealType()})
+                this.setState({
+                    ...getDefaultMeal(),
+                })
             })
     }
 
     componentDidMount() {
         this.unsubscribe = this.ref.onSnapshot(this.onMealsUpdate)
         this.setState({
-            type: getMealType()
+            ...getDefaultMeal()
         })
     }
 
