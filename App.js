@@ -9,8 +9,24 @@
 import React, {Component} from 'react';
 import {Button, FlatList, Picker, StyleSheet, Text, TextInput, View} from 'react-native';
 import firebase from 'react-native-firebase';
+import moment from 'moment';
 
 type Props = {};
+const getMealType = () => {
+
+    const breakfastThreshold = moment().hour(11);
+    const dinnerThreshold = moment().hour(16);
+    const currentTime = moment();
+
+    if (currentTime.isBefore(breakfastThreshold)) {
+        return 'Breakfast';
+    } else if (currentTime.isBefore(dinnerThreshold)) {
+        return 'Lunch';
+    } else {
+        return 'Dinner';
+    }
+};
+
 export default class App extends Component<Props> {
     constructor(props) {
         super(props);
@@ -24,12 +40,15 @@ export default class App extends Component<Props> {
         const {meal, date, type} = this.state;
         this.ref.add({meal, date, type})
             .then(() => {
-                this.setState({meal: '', date: '', type: ''})
+                this.setState({meal: '', date: '', type: getMealType()})
             })
     }
 
     componentDidMount() {
         this.unsubscribe = this.ref.onSnapshot(this.onMealsUpdate)
+        this.setState({
+            type: getMealType()
+        })
     }
 
     componentWillUnmount() {
