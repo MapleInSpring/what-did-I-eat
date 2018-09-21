@@ -54,28 +54,35 @@ export default class App extends Component<Props> {
     renderMealForm() {
         return (
             <View>
-                <Text>Date</Text>
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200}}
-                    onChangeText={(date) => this.setState({date})}
-                    value={this.state.date}
-                />
-                <Text>Type</Text>
-                <Picker
-                    selectedValue={this.state.type}
-                    style={{ height: 50, width: 200 }}
-                    onValueChange={(itemValue) => this.setState({type: itemValue})}>
-                    <Picker.Item label="Breakfast" value="Breakfast" />
-                    <Picker.Item label="Lunch" value="Lunch" />
-                    <Picker.Item label="Dinner" value="Dinner" />
-                    <Picker.Item label="Snacks" value="Snacks" />
-                </Picker>
-                <Text>Meal</Text>
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200}}
-                    onChangeText={(meal) => this.setState({meal})}
-                    value={this.state.meal}
-                />
+                <View style={styles.inputBox}>
+                    <Text>Date</Text>
+                    <TextInput
+                        style={[styles.inputBorder]}
+                        onChangeText={(date) => this.setState({date})}
+                        value={this.state.date}
+                    />
+                </View>
+                <View style={styles.inputBox}>
+                    <Text>Type</Text>
+                    <View style={styles.inputBorder}>
+                        <Picker
+                            selectedValue={this.state.type}
+                            onValueChange={(itemValue) => this.setState({type: itemValue})}>
+                            <Picker.Item label="Breakfast" value="Breakfast"/>
+                            <Picker.Item label="Lunch" value="Lunch"/>
+                            <Picker.Item label="Dinner" value="Dinner"/>
+                            <Picker.Item label="Snacks" value="Snacks"/>
+                        </Picker>
+                    </View>
+                </View>
+                <View style={styles.inputBox}>
+                    <Text> Meal </Text>
+                    <TextInput
+                        style={styles.inputBorder}
+                        onChangeText={(meal) => this.setState({meal})}
+                        value={this.state.meal}
+                    />
+                </View>
                 <Button onPress={() => this.uploadData(this)} title={'Save Meal'}/>
             </View>
         )
@@ -114,5 +121,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
+    },
+    inputBorder: {
+        borderWidth: 1,
+        borderColor: 'gray'
+    },
+    inputBox: {
+        height: 50,
+        width: 250,
+        margin: 15
     }
 });
