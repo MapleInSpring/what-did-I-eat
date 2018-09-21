@@ -30,7 +30,11 @@ const getDefaultMeal = () => {
     return {
         type: getMealType(),
         date: moment().format('YYYY-MM-DD'),
-        meal: ''
+        meal: '',
+        meat: '',
+        carbs: '',
+        fibre: '',
+        nuts: ''
     }
 };
 
@@ -47,8 +51,8 @@ export default class App extends Component<Props> {
     }
 
     uploadData() {
-        const {meal, date, type} = this.state;
-        this.ref.add({meal, date, type})
+        const {meal, date, type, meat, carbs, fibre, nuts} = this.state;
+        this.ref.add({meal, date, type, meat, carbs, fibre, nuts})
             .then(() => {
                 this.setState({
                     ...getDefaultMeal(),
@@ -88,15 +92,15 @@ export default class App extends Component<Props> {
         return (
             <View>
                 <View style={styles.inputBox}>
-                    <Text>Date</Text>
                     <TextInput
                         style={[styles.inputBorder]}
                         onChangeText={(date) => this.setState({date})}
                         value={this.state.date}
+                        placeholder={'Date'}
                     />
                 </View>
+
                 <View style={styles.inputBox}>
-                    <Text>Type</Text>
                     <View style={styles.inputBorder}>
                         <Picker
                             selectedValue={this.state.type}
@@ -108,14 +112,52 @@ export default class App extends Component<Props> {
                         </Picker>
                     </View>
                 </View>
+
                 <View style={styles.inputBox}>
-                    <Text> Meal </Text>
                     <TextInput
                         style={styles.inputBorder}
                         onChangeText={(meal) => this.setState({meal})}
                         value={this.state.meal}
+                        placeholder={'Meal'}
                     />
                 </View>
+
+                <View style={styles.inputBox}>
+                    <TextInput
+                        style={styles.inputBorder}
+                        onChangeText={(meat) => this.setState({meat})}
+                        value={this.state.meat}
+                        placeholder={'Meat'}
+                    />
+                </View>
+
+                <View style={styles.inputBox}>
+                    <TextInput
+                        style={styles.inputBorder}
+                        onChangeText={(carbs) => this.setState({carbs})}
+                        value={this.state.carbs}
+                        placeholder={'Carbs'}
+                    />
+                </View>
+
+                <View style={styles.inputBox}>
+                    <TextInput
+                        style={styles.inputBorder}
+                        onChangeText={(fibre) => this.setState({fibre})}
+                        value={this.state.fibre}
+                        placeholder={'Fruits / Vegie'}
+                    />
+                </View>
+
+                <View style={styles.inputBox}>
+                    <TextInput
+                        style={styles.inputBorder}
+                        onChangeText={(nuts) => this.setState({nuts})}
+                        value={this.state.nuts}
+                        placeholder={'Nuts'}
+                    />
+                </View>
+
                 <Button onPress={() => this.uploadData(this)} title={'Save Meal'}/>
             </View>
         )
@@ -149,6 +191,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        padding: 15
     },
     welcome: {
         fontSize: 20,
@@ -162,6 +205,6 @@ const styles = StyleSheet.create({
     inputBox: {
         height: 50,
         width: 250,
-        margin: 15
+        margin: 2
     }
 });
