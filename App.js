@@ -22,8 +22,10 @@ export default class App extends Component<Props> {
 
     uploadData() {
         const {meal, date, type} = this.state;
-        console.warn(this.state);
         this.ref.add({meal, date, type})
+            .then(() => {
+                this.setState({meal: '', date: '', type: ''})
+            })
     }
 
     componentDidMount() {
